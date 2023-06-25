@@ -6,18 +6,18 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './pizza-list.component.html'
 })
 export class PizzaListComponent {
-  public forecasts: WeatherForecast[] = [];
+  public pizzas: any[] = [];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'api/Pizza').subscribe(result => {
-      this.forecasts = result;
+    http.get<any[]>(baseUrl + 'api/pizza').subscribe(result => {
+      this.pizzas = result;
     }, error => console.error(error));
   }
 }
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+// interface WeatherForecast {
+//   date: string;
+//   temperatureC: number;
+//   temperatureF: number;
+//   summary: string;
+// }

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CounterComponent } from './counter.component';
+import { ToppingListComponent } from './topping-list.component';
 
 describe('CounterComponent', () => {
-  let fixture: ComponentFixture<CounterComponent>;
+  let fixture: ComponentFixture<ToppingListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CounterComponent ]
+      declarations: [ ToppingListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CounterComponent);
+    fixture = TestBed.createComponent(ToppingListComponent);
     fixture.detectChanges();
   });
 

@@ -1,25 +1,24 @@
 <h1 id="tableLabel">Pizzas</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pizzaModal">
+  Add a Pizza
+</button>
+<app-pizza-modal></app-pizza-modal>
 
 <p *ngIf="!pizzas?.length"><em>Loading...</em></p>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="pizzas?.length">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th>Name</th>
+      <!-- <th>Toppings</th> -->
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let pizza of pizzas">
-      <!-- <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td> -->
-      <td>I have a pizza!</td>
+
+      <td>{{ pizza.Name }}</td>
+      <!-- <td>{{ pizza.toppings.reduce((t1, t2) => t1.name.concat(", ").concat(t2.name), "") }}</td> -->
     </tr>
   </tbody>
 </table>

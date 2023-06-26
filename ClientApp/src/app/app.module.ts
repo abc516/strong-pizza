@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { ToppingListComponent } from './topping-list/topping-list.component';
 import { PizzaListComponent } from './pizza-list/pizza-list.component';
+import { ToppingModalComponent } from './topping-modal/topping-modal.component';
 
 @NgModule({
   declarations: [
@@ -16,16 +17,18 @@ import { PizzaListComponent } from './pizza-list/pizza-list.component';
     NavMenuComponent,
     PizzaModalComponent,
     ToppingListComponent,
-    PizzaListComponent
+    PizzaListComponent,
+    ToppingModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'fetch-data', pathMatch: 'full' },
-      { path: 'counter', component: ToppingListComponent },
-      { path: 'fetch-data', component: PizzaListComponent },
+      { path: '', redirectTo: 'pizzas', pathMatch: 'full' },
+      { path: 'toppings', component: ToppingListComponent },
+      { path: 'pizzas', component: PizzaListComponent },
     ])
   ],
   providers: [],

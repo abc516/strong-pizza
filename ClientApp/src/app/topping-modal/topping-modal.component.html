@@ -1,1 +1,34 @@
-Fill me
+<div class="modal fade" id="toppingModal" tabindex="-1" role="dialog" aria-labelledby="toppingModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="toppingModalLabel">Create Topping</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="toppingForm" (ngSubmit)="submitForm()">
+          <div class="form-group">
+            <label for="flavor">Flavor:</label>
+            <select formControlName="flavor" id="flavor" class="form-control">
+              <option *ngFor="let flavor of flavors" [value]="flavor">{{ flavor }}</option>
+            </select>
+            <div *ngIf="toppingForm.get('flavor')?.invalid && toppingForm.get('flavor')?.touched" class="error-message">
+              Flavor is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" formControlName="name" id="name" class="form-control">
+            <div *ngIf="toppingForm.get('name')?.invalid && toppingForm.get('name')?.touched" class="error-message">
+              Name is required and should contain only alphanumeric characters. Maximum 100 characters allowed.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

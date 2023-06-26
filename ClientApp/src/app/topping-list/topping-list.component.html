@@ -1,7 +1,22 @@
-<h1>Counter</h1>
+<h1>Toppings</h1>
 
-<p>This is a simple example of an Angular component.</p>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#toppingModal">
+  Add a Topping
+</button>
+<app-topping-modal></app-topping-modal>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="toppings?.length">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Flavor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let topping of toppings">
 
-<p aria-live="polite">Current count: <strong>{{ currentCount }}</strong></p>
-
-<button class="btn btn-primary" (click)="incrementCounter()">Increment</button>
+      <td>{{ topping.name }}</td>
+      <td>{{ topping.flavor}}</td>
+      <td><button type="button" class="btn btn-secondary btn-sm">Delete</button></td>
+    </tr>
+  </tbody>
+</table>

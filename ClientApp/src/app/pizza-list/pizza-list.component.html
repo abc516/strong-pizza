@@ -3,7 +3,7 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pizzaModal">
   Add a Pizza
 </button>
-<app-pizza-modal></app-pizza-modal>
+<app-pizza-modal *ngIf="!hideModal" [allToppings]="toppings"></app-pizza-modal>
 
 <p *ngIf="!pizzas?.length"><em>Loading...</em></p>
 
@@ -11,14 +11,15 @@
   <thead>
     <tr>
       <th>Name</th>
-      <!-- <th>Toppings</th> -->
+      <th>Toppings</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let pizza of pizzas">
 
-      <td>{{ pizza.Name }}</td>
-      <!-- <td>{{ pizza.toppings.reduce((t1, t2) => t1.name.concat(", ").concat(t2.name), "") }}</td> -->
+      <td>{{ pizza.name }}</td>
+      <td>{{ pizza.toppings }}</td>
+      <td><button type="button" class="btn btn-secondary btn-sm" (click)="delete(pizza)">Delete</button></td>
     </tr>
   </tbody>
 </table>

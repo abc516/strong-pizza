@@ -18,9 +18,9 @@
           </div>
           <div class="form-group">
             <label>Toppings:</label>
-            <div *ngFor="let topping of toppings.controls; let i = index" class="form-check">
+            <div formArrayName="toppings" *ngFor="let topping of toppingsFormArray.controls; let i = index" class="form-check">
               <input type="checkbox" [formControlName]="i" class="form-check-input">
-              <label class="form-check-label">{{ 'Topping ' + (i + 1) }}</label>
+              <label class="form-check-label">{{ allToppings[i].name }} ({{ allToppings[i].flavor }})</label>
             </div>
             <div *ngIf="pizzaForm.get('toppings')?.invalid && pizzaForm.get('toppings')?.touched" class="error-message">
               At least one topping must be selected.

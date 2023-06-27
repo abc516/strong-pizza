@@ -1,7 +1,7 @@
 import { ITopping } from "./ITopping";
 
 export interface IPizza {
-  Name: string;
-  Toppings: Array<ITopping>;
-  Id?: number;
+  name: string;
+  toppings: Array<ITopping>;
+  id?: number;
 }

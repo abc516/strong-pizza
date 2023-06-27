@@ -26,6 +26,14 @@ export class ToppingListComponent {
   //     method: "GET"
   //   });
 
-  //   console.log(resp.json());
-  // }
+  public delete(topping: ITopping){
+
+    fetch(`${this.baseUrl}api/topping/${topping.id}`, {
+      method: "DELETE"
+    }).then(() => {
+      // message then close logic
+    }).catch(() => {
+      console.error("didn't delete")
+    })
+  }
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Flavor, ITopping } from '../interfaces/ITopping';
 
 @Component({
   selector: 'app-topping-modal',
@@ -7,9 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ToppingModalComponent implements OnInit {
   toppingForm!: FormGroup;
-  flavors: string[] = ['Pepperoni', 'Mushroom', 'Onion', 'Green Pepper'];
+  flavors: string[] = Object.values(Flavor);
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -27,9 +29,19 @@ export class ToppingModalComponent implements OnInit {
       // Handle form submission
       console.log(this.toppingForm.value);
       // You can send the form data to your API or perform other actions
+      const body = {Flavor: `${this.toppingForm.controls['flavor'].value}`  , Name: `${this.toppingForm.controls['name'].value}` };
 
+      this.http.post(`${this.baseUrl}api/topping`,
+       body,
+      {  }).subscribe(result => {
+        console.log('Added topping successfully')
+        this.closeModal();
+      }, error => console.error(error));
+
+      // fetch(`${this.baseUrl}api/topping`, {
+      //   body: body
+      // })
       // Close the modal
-      this.closeModal();
     } else {
       // Form is invalid, display validation errors
       this.markFormControlsAsTouched();

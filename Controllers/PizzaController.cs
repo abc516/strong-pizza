@@ -7,24 +7,24 @@ namespace strong_pizza.Controllers;
 [Route("api/[controller]")]
 public class PizzaController : ControllerBase
 {
-       private readonly IPizzaService _pizzaRepository;
+       private readonly IPizzaService _pizzaService;
 
-    public PizzaController(IPizzaService pizzaRepository)
+    public PizzaController(IPizzaService pizzaService)
     {
-        _pizzaRepository = pizzaRepository;
+        _pizzaService = pizzaService;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Pizza>> Get()
+    public IEnumerable<Pizza> Get()
     {
-        var pizzas = _pizzaRepository.GetPizzas();
-        return Ok(pizzas);
+        var pizzas = _pizzaService.GetPizzas();
+        return (pizzas);
     }
 
     [HttpGet("{id}")]
     public ActionResult<Pizza> GetById(int id)
     {
-        var pizza = _pizzaRepository.GetPizzaById(id);
+        var pizza = _pizzaService.GetPizzaById(id);
 
         if (pizza == null)
         {
@@ -42,7 +42,7 @@ public class PizzaController : ControllerBase
             return BadRequest();
         }
 
-        _pizzaRepository.AddPizza(pizza);
+        _pizzaService.AddPizza(pizza);
         return CreatedAtAction(nameof(GetById), new { id = pizza.Id }, pizza);
     }
 
@@ -54,28 +54,28 @@ public class PizzaController : ControllerBase
             return BadRequest();
         }
 
-        Pizza existingPizza = _pizzaRepository.GetPizzaById(id);
+        Pizza existingPizza = _pizzaService.GetPizzaById(id);
 
         if (existingPizza == null)
         {
             return NotFound();
         }
 
-        _pizzaRepository.UpdatePizza(updatedPizza);
+        _pizzaService.UpdatePizza(updatedPizza);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var existingPizza = _pizzaRepository.GetPizzaById(id);
+        var existingPizza = _pizzaService.GetPizzaById(id);
 
         if (existingPizza == null)
         {
             return NotFound();
         }
 
-        _pizzaRepository.DeletePizza(id);
+        _pizzaService.DeletePizza(id);
         return NoContent();
     }
 }

@@ -2,25 +2,31 @@ using strong_pizza.Services.Interfaces;
 
 public class ToppingService : IToppingService
 {
+
+    private StrongPizzaContext _context;
+    public ToppingService(StrongPizzaContext context){
+        _context = context;
+    }
     public void AddTopping(Topping topping)
     {
-        throw new NotImplementedException();
+        _context.Add<Topping>(topping);
+        _context.SaveChanges();
     }
 
     public void DeleteTopping(int id)
     {
-        throw new NotImplementedException();
+        Topping tp = _context.Toppings.Find(id);
+        _context.Toppings.Remove(tp);
     }
 
     public Topping GetToppingById(int id)
     {
-        throw new NotImplementedException();
+       return _context.Toppings.Find(id);
     }
 
     public IEnumerable<Topping> GetToppings()
     {
-        // throw new NotImplementedException();
-        return new List<Topping>();
+        return _context.Toppings.AsEnumerable();
     }
 
     public void UpdateTopping(Topping? updatedTopping)

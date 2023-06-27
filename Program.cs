@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using strong_pizza.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IToppingService, ToppingService>();
 builder.Services.AddScoped<IPizzaService, PizzaService>();
+
+builder.Services.AddDbContext<StrongPizzaContext>(options =>
+    options.UseInMemoryDatabase("StrongPizzaDB"));
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

@@ -1,37 +1,42 @@
 
 
+using Microsoft.EntityFrameworkCore;
 using strong_pizza.Services.Interfaces;
 
 // todo properly implement
 public class PizzaService : IPizzaService
 {
+    private StrongPizzaContext _context;
+    public PizzaService(StrongPizzaContext context){
+        _context = context;
+    }
     public void AddPizza(Pizza pizza)
     {
-        throw new NotImplementedException();
+        _context.Add<Pizza>(pizza);
+        // Do this so we don't duplicate add entries
+        foreach(var topping in pizza.Toppings){
+            _context.Entry(topping).State = EntityState.Unchanged;
+        }
+        _context.SaveChanges();
     }
 
     public void DeletePizza(int id)
     {
-        throw new NotImplementedException();
+        Pizza pz = _context.Pizzas.Find(id);
+        _context.Pizzas.Remove(pz);
+        _context.SaveChanges();
     }
 
     public Pizza GetPizzaById(int id)
     {
-        throw new NotImplementedException();
+        return _context.Pizzas.Find(id);
     }
 
     public IEnumerable<Pizza> GetPizzas()
     {
         
-        Pizza pz = new Pizza();
-        pz.Name = "test";
-        Topping t1 = new Topping();
-        t1.Name = "test topping";
-        // = FlavorEnum.Salty;
-        pz.Toppings = new List<Topping>{t1};
-        IList<Pizza> pList = new List<Pizza>();
-        pList.Add(pz);
-        return pList;
+        return _context.Pizzas.AsEnumerable();
+
     }
 
     public void UpdatePizza(Pizza? updatedPizza)

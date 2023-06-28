@@ -15,16 +15,15 @@ export class ToppingListComponent {
   }
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.baseUrl = baseUrl;
+    this.getToppings(http, baseUrl);
+  }
+
+  private getToppings(http: HttpClient, baseUrl: string) {
     http.get<ITopping[]>(baseUrl + 'api/topping').subscribe(result => {
       this.toppings = result;
     }, error => console.error(error));
-    this.baseUrl = baseUrl;
   }
-
-  // public async ngOnInit(): Promise<void> {
-  //   const resp = await fetch(`${this.baseUrl}api/topping`, {
-  //     method: "GET"
-  //   });
 
   public delete(topping: ITopping){
 
@@ -32,9 +31,7 @@ export class ToppingListComponent {
       method: "DELETE"
     }).then(() => {
       // refresh topping
-      this.http.get<ITopping[]>(this.baseUrl + 'api/topping').subscribe(result => {
-        this.toppings = result;
-      }, error => console.error(error));
+      this.getToppings(this.http, this.baseUrl);
     }).catch(() => {
       console.error("didn't delete")
     })
@@ -42,12 +39,10 @@ export class ToppingListComponent {
 
   public update(topping: ITopping){
 
-    fetch(`${this.baseUrl}api/topping/${topping.id}`, {
-      method: "DELETE"
-    }).then(() => {
+    this.http.put(`${this.baseUrl}api/topping`, {
+      topping
+    }).subscribe(() => {
       // message then close logic
-    }).catch(() => {
-      console.error("didn't delete")
-    })
+    }, error => console.error(error));
   }
 }

@@ -12,13 +12,17 @@ export class PizzaListComponent {
   public toppings: ITopping[] = [];
   public hideModal = true;
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    http.get<IPizza[]>(baseUrl + 'api/pizza').subscribe(result => {
-      this.pizzas = result;
-    }, error => console.error(error));
+    this.getPizzas(http, baseUrl);
     http.get<ITopping[]>(baseUrl + 'api/topping').subscribe(result => {
       this.toppings = result
       this.hideModal = false;
     }, error => console.error(error))
+  }
+
+  private getPizzas(http: HttpClient, baseUrl: string) {
+    http.get<IPizza[]>(baseUrl + 'api/pizza').subscribe(result => {
+      this.pizzas = result;
+    }, error => console.error(error));
   }
 
   public delete(pizza: IPizza){
@@ -26,10 +30,7 @@ export class PizzaListComponent {
     fetch(`${this.baseUrl}api/pizza/${pizza.id}`, {
       method: "DELETE"
     }).then(() => {
-      // refresh pizzas
-      this.http.get<IPizza[]>(this.baseUrl + 'api/pizza').subscribe(result => {
-        this.pizzas = result;
-      }, error => console.error(error));
+      this.getPizzas(this.http, this.baseUrl);
     }).catch(() => {
       console.error("didn't delete")
     })

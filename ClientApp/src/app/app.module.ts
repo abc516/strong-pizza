@@ -26,7 +26,7 @@ import { ToppingModalComponent } from './topping-modal/topping-modal.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'pizzas', pathMatch: 'full' },
+      { path: '', redirectTo: 'toppings', pathMatch: 'full' },
       { path: 'toppings', component: ToppingListComponent },
       { path: 'pizzas', component: PizzaListComponent },
     ])

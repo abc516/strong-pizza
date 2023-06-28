@@ -11,7 +11,7 @@ export class PizzaListComponent {
   public pizzas: IPizza[] = [];
   public toppings: ITopping[] = [];
   public hideModal = true;
-  constructor(http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     http.get<IPizza[]>(baseUrl + 'api/pizza').subscribe(result => {
       this.pizzas = result;
     }, error => console.error(error));
@@ -22,6 +22,26 @@ export class PizzaListComponent {
   }
 
   public delete(pizza: IPizza){
+
+    fetch(`${this.baseUrl}api/pizza/${pizza.id}`, {
+      method: "DELETE"
+    }).then(() => {
+      // refresh pizzas
+      this.http.get<IPizza[]>(this.baseUrl + 'api/pizza').subscribe(result => {
+        this.pizzas = result;
+      }, error => console.error(error));
+    }).catch(() => {
+      console.error("didn't delete")
+    })
+  }
+
+  public getToppings(toppings: any): string {
+    // need to do an additional mapping due to EF properties on backend
+    const toppingsCleaned: ITopping[] = toppings["$values"];
+    return toppingsCleaned.map(topping => `${topping.name} (${topping.flavor})`).join(',');
+  }
+
+  public update(pizza: IPizza){
 
     fetch(`${this.baseUrl}api/pizza/${pizza.id}`, {
       method: "DELETE"

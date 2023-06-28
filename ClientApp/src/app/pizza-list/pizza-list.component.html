@@ -5,8 +5,6 @@
 </button>
 <app-pizza-modal *ngIf="!hideModal" [allToppings]="toppings"></app-pizza-modal>
 
-<p *ngIf="!pizzas?.length"><em>Loading...</em></p>
-
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="pizzas?.length">
   <thead>
     <tr>
@@ -18,8 +16,9 @@
     <tr *ngFor="let pizza of pizzas">
 
       <td>{{ pizza.name }}</td>
-      <td>{{ pizza.toppings }}</td>
+      <td>{{ getToppings(pizza.toppings) }}</td>
       <td><button type="button" class="btn btn-secondary btn-sm" (click)="delete(pizza)">Delete</button></td>
+      <td><button type="button" class="btn btn-secondary btn-sm" (click)="update(pizza)">Update</button></td>
     </tr>
   </tbody>
 </table>

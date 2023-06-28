@@ -38,10 +38,6 @@ export class ToppingModalComponent implements OnInit {
         this.closeModal();
       }, error => console.error(error));
 
-      // fetch(`${this.baseUrl}api/topping`, {
-      //   body: body
-      // })
-      // Close the modal
     } else {
       // Form is invalid, display validation errors
       this.markFormControlsAsTouched();

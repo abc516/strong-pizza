@@ -14,7 +14,7 @@ export class ToppingListComponent {
     this.currentCount++;
   }
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<ITopping[]>(baseUrl + 'api/topping').subscribe(result => {
       this.toppings = result;
     }, error => console.error(error));
@@ -27,6 +27,20 @@ export class ToppingListComponent {
   //   });
 
   public delete(topping: ITopping){
+
+    fetch(`${this.baseUrl}api/topping/${topping.id}`, {
+      method: "DELETE"
+    }).then(() => {
+      // refresh topping
+      this.http.get<ITopping[]>(this.baseUrl + 'api/topping').subscribe(result => {
+        this.toppings = result;
+      }, error => console.error(error));
+    }).catch(() => {
+      console.error("didn't delete")
+    })
+  }
+
+  public update(topping: ITopping){
 
     fetch(`${this.baseUrl}api/topping/${topping.id}`, {
       method: "DELETE"

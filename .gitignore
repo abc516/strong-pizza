@@ -229,3 +229,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# .Net Core MVC and Angular Cache file
+ClientApp/.angular/

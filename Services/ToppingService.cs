@@ -17,6 +17,7 @@ public class ToppingService : IToppingService
     {
         Topping tp = _context.Toppings.Find(id);
         _context.Toppings.Remove(tp);
+        _context.SaveChanges();
     }
 
     public Topping GetToppingById(int id)
@@ -31,6 +32,7 @@ public class ToppingService : IToppingService
 
     public void UpdateTopping(Topping? updatedTopping)
     {
-        throw new NotImplementedException();
+        _context.Toppings.Update(updatedTopping);
+        _context.SaveChanges();
     }
 }

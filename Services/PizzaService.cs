@@ -41,6 +41,7 @@ public class PizzaService : IPizzaService
 
     public void UpdatePizza(Pizza? updatedPizza)
     {
-        throw new NotImplementedException();
+        _context.Pizzas.Update(updatedPizza);
+        _context.SaveChanges();
     }
 }

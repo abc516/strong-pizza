@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Flavor, ITopping } from '../interfaces/ITopping';
+import * as $ from 'jquery';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topping-modal',
@@ -11,7 +13,7 @@ export class ToppingModalComponent implements OnInit {
   toppingForm!: FormGroup;
   flavors: string[] = Object.values(Flavor);
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -51,6 +53,12 @@ export class ToppingModalComponent implements OnInit {
   }
 
   closeModal(): void {
-    // Logic to close the modal
+    // Logic to close the modal via jquery
+    $('.modal-backdrop').hide();
+    $('.modal').removeClass('show');
+    const currentUrl = this.router.url;
+        this.router.navigateByUrl('/pizzas', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/toppings']);
+        });
   }
 }

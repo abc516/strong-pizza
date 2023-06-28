@@ -3,6 +3,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators
 import { ITopping } from '../interfaces/ITopping';
 import { IPizza } from '../interfaces/IPizza';
 import { HttpClient } from '@angular/common/http';
+import * as $ from 'jquery';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pizza-modal',
@@ -12,7 +14,7 @@ export class PizzaModalComponent implements OnInit {
   pizzaForm!: FormGroup;
   @Input() allToppings: ITopping[] = [];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -25,14 +27,6 @@ export class PizzaModalComponent implements OnInit {
     });
   }
 
-  // public customValidateArray(): ValidatorFn {
-  //   return (formArray:FormArray):{[key: string]: any} | null => {
-  //     return formArray.controls.includes((x:FormControl) => {
-  //         return x.value.selected==true;
-  //     }) ? null : {error:'No Topping Selectet'};
-  //   }
-  // };
-
   private buildToppings(): FormArray<FormControl<unknown>> {
     const toppingsArray = this.formBuilder.array([], Validators.required);
     this.allToppings.forEach(topping => {
@@ -44,14 +38,8 @@ export class PizzaModalComponent implements OnInit {
     return toppingsArray;
   }
 
-  // createToppings(): FormGroup {
-  //   return this.formBuilder.group({
-  //     selected: false
-  //   });
-  // }
 
   get toppingsFormArray(): FormArray {
-    // return this.pizzaForm.get('toppings') as FormArray;
     return this.pizzaForm.controls.toppings as FormArray;
   }
 
@@ -92,5 +80,11 @@ export class PizzaModalComponent implements OnInit {
 
   closeModal(): void {
     // Logic to close the modal
+    $('.modal-backdrop').hide();
+    $('.modal').removeClass('show');
+    const currentUrl = this.router.url;
+        this.router.navigateByUrl('/toppings', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/pizzas']);
+        });
   }
 }

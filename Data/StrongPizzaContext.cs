@@ -12,6 +12,15 @@ public class StrongPizzaContext : DbContext
     modelBuilder.Entity<Pizza>()
         .HasMany(e => e.Toppings)
         .WithMany(e => e.Pizzas);
+
+    modelBuilder.Entity<Topping>()
+        .HasIndex(e =>  e.Name)
+        .IsUnique();
+
+    modelBuilder.Entity<Pizza>()
+        .HasIndex(e => e.Name)
+        .IsUnique();
+
 }
 
 

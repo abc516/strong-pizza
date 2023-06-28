@@ -9,30 +9,67 @@ public class ToppingService : IToppingService
     }
     public void AddTopping(Topping topping)
     {
-        _context.Add<Topping>(topping);
-        _context.SaveChanges();
+    try
+    {
+            _context.Add<Topping>(topping);
+            _context.SaveChanges();
+    }
+    catch (System.Exception ex)
+    {
+       throw new Exception($"{ex.Message}");
+    }
     }
 
     public void DeleteTopping(int id)
     {
-        Topping tp = _context.Toppings.Find(id);
-        _context.Toppings.Remove(tp);
-        _context.SaveChanges();
+        try
+        {
+            Topping tp = _context.Toppings.Find(id);
+            _context.Toppings.Remove(tp);
+            _context.SaveChanges();
+        }
+        catch (System.Exception ex)
+        {
+           throw new Exception($"{ex.Message}");
+        }
     }
 
     public Topping GetToppingById(int id)
     {
-       return _context.Toppings.Find(id);
+       try
+       {
+        return _context.Toppings.Find(id);
+       }
+       catch (System.Exception ex)
+       {
+        throw new Exception($"{ex.Message}");
+       }
     }
 
     public IEnumerable<Topping> GetToppings()
     {
-        return _context.Toppings.AsEnumerable();
+       try
+       {
+         return _context.Toppings.AsEnumerable();
+       }
+       catch (System.Exception ex)
+       {
+        
+        throw new Exception($"{ex.Message}");
+       }
     }
 
     public void UpdateTopping(Topping? updatedTopping)
     {
-        _context.Toppings.Update(updatedTopping);
-        _context.SaveChanges();
+       try
+       {
+         _context.Toppings.Update(updatedTopping);
+         _context.SaveChanges();
+       }
+       catch (System.Exception ex)
+       {
+        
+       throw new Exception($"{ex.Message}");
+       }
     }
 }

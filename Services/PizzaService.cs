@@ -13,27 +13,49 @@ public class PizzaService : IPizzaService
     public void AddPizza(Pizza pizza)
     {
          // Do this so we don't duplicate add entries
-        List<Topping> tops = new List<Topping>();
-        pizza.Toppings.ToList().ForEach(tp => {
-            tops.Add(_context.Toppings.FirstOrDefault(top => top.Id == tp.Id));
-        });
-        Pizza pz = new Pizza();
-        pz.Name = pizza.Name;
-        pz.Toppings = tops;
-        _context.Add(pz);
-        _context.SaveChanges();
+       try
+       {
+         List<Topping> tops = new List<Topping>();
+         pizza.Toppings.ToList().ForEach(tp => {
+             tops.Add(_context.Toppings.FirstOrDefault(top => top.Id == tp.Id));
+         });
+         Pizza pz = new Pizza();
+         pz.Name = pizza.Name;
+         pz.Toppings = tops;
+         _context.Add(pz);
+         _context.SaveChanges();
+       }
+       catch (System.Exception ex)
+       {
+        
+        throw new Exception($"{ex.Message}");
+       }
     }
 
     public void DeletePizza(int id)
     {
-        Pizza pz = _context.Pizzas.Find(id);
-        _context.Pizzas.Remove(pz);
-        _context.SaveChanges();
+        try
+    {
+            Pizza pz = _context.Pizzas.Find(id);
+            _context.Pizzas.Remove(pz);
+            _context.SaveChanges();
+    }
+    catch (System.Exception ex)
+    {
+        throw new Exception($"{ex.Message}");
+    }
     }
 
     public Pizza GetPizzaById(int id)
     {
-        return _context.Pizzas.Find(id);
+        try
+    {
+            return _context.Pizzas.Find(id);
+    }
+    catch (System.Exception ex)
+    {
+         throw new Exception($"{ex.Message}");
+    }
     }
 
     public IEnumerable<Pizza> GetPizzas()
@@ -44,7 +66,14 @@ public class PizzaService : IPizzaService
 
     public void UpdatePizza(Pizza? updatedPizza)
     {
-        _context.Pizzas.Update(updatedPizza);
-        _context.SaveChanges();
+        try
+    {
+            _context.Pizzas.Update(updatedPizza);
+            _context.SaveChanges();
+    }
+    catch (System.Exception ex)
+    {
+        throw new Exception($"{ex.Message}");
+    }
     }
 }

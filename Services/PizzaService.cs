@@ -12,11 +12,15 @@ public class PizzaService : IPizzaService
     }
     public void AddPizza(Pizza pizza)
     {
-        _context.Add<Pizza>(pizza);
-        // Do this so we don't duplicate add entries
-        foreach(var topping in pizza.Toppings){
-            _context.Entry(topping).State = EntityState.Unchanged;
-        }
+         // Do this so we don't duplicate add entries
+        List<Topping> tops = new List<Topping>();
+        pizza.Toppings.ToList().ForEach(tp => {
+            tops.Add(_context.Toppings.FirstOrDefault(top => top.Id == tp.Id));
+        });
+        Pizza pz = new Pizza();
+        pz.Name = pizza.Name;
+        pz.Toppings = tops;
+        _context.Add(pz);
         _context.SaveChanges();
     }
 
@@ -34,8 +38,7 @@ public class PizzaService : IPizzaService
 
     public IEnumerable<Pizza> GetPizzas()
     {
-        
-        return _context.Pizzas.AsEnumerable();
+        return _context.Pizzas.Include(pz => pz.Toppings).AsEnumerable();
 
     }
 

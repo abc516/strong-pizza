@@ -1,10 +1,14 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using strong_pizza.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 
 builder.Services.AddScoped<IToppingService, ToppingService>();
 builder.Services.AddScoped<IPizzaService, PizzaService>();
@@ -22,6 +26,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 } else {
     app.UseSwagger();
+    app.UseSwaggerUI();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");

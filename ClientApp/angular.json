@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "strong_pizza"
+  "defaultProject": "strong_pizza",
+  "cli": {
+    "analytics": false
+  }
 }

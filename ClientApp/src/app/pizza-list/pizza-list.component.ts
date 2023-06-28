@@ -11,7 +11,7 @@ export class PizzaListComponent {
   public pizzas: IPizza[] = [];
   public toppings: ITopping[] = [];
   public hideModal = true;
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
     this.getPizzas(http, baseUrl);
     http.get<ITopping[]>(baseUrl + 'api/topping').subscribe(result => {
       this.toppings = result
@@ -19,7 +19,7 @@ export class PizzaListComponent {
     }, error => console.error(error))
   }
 
-  private getPizzas(http: HttpClient, baseUrl: string) {
+  public getPizzas(http: HttpClient, baseUrl: string) {
     http.get<IPizza[]>(baseUrl + 'api/pizza').subscribe(result => {
       this.pizzas = result;
     }, error => console.error(error));

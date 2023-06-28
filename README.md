@@ -1,6 +1,7 @@
 ## Prerequisites for running the app Locally
 * .Net Core (v7+)
 * Node js (v18+)
+* Angular CLI (https://angular.io/cli)
 * Visual Studio Code / Visual Studio (optional)
 
 ## How to build 
@@ -15,7 +16,8 @@
 
 
 ## How to run tests
-* Run `dotnet test`
+* cd `ClientApp`
+* run `ng test`
 
 ## A note on data persistence and deployment
 In order to simplify deployment, we are using an InMemory data provider from Microsoft. 

@@ -7,12 +7,8 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './topping-list.component.html'
 })
 export class ToppingListComponent {
-  public currentCount = 0;
   public toppings: ITopping[] = [];
   public baseUrl: string;
-  public incrementCounter() {
-    this.currentCount++;
-  }
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;

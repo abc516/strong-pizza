@@ -14,7 +14,7 @@ export class PizzaModalComponent implements OnInit {
   pizzaForm!: FormGroup;
   @Input() allToppings: ITopping[] = [];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, public http: HttpClient, @Inject('BASE_URL') public baseUrl: string, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -27,7 +27,7 @@ export class PizzaModalComponent implements OnInit {
     });
   }
 
-  private buildToppings(): FormArray<FormControl<unknown>> {
+  public buildToppings(): FormArray<FormControl<unknown>> {
     const toppingsArray = this.formBuilder.array([], Validators.required);
     this.allToppings.forEach(topping => {
       toppingsArray.push(

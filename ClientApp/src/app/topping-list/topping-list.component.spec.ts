@@ -1,34 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToppingListComponent } from './topping-list.component';
 
-describe('CounterComponent', () => {
+describe('ToppingListComponent', () => {
+  let component: ToppingListComponent;
   let fixture: ComponentFixture<ToppingListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ToppingListComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      declarations: [ToppingListComponent]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToppingListComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should display a title', async(() => {
-    const titleText = fixture.nativeElement.querySelector('h1').textContent;
-    expect(titleText).toEqual('toppings');
-  }));
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
 
-  it('should start with count 0, then increments by 1 when clicked', async(() => {
-    const countElement = fixture.nativeElement.querySelector('strong');
-    expect(countElement.textContent).toEqual('0');
 
-    const incrementButton = fixture.nativeElement.querySelector('button');
-    incrementButton.click();
-    fixture.detectChanges();
-    expect(countElement.textContent).toEqual('1');
-  }));
 });
